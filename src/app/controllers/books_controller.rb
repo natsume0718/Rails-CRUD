@@ -19,5 +19,18 @@ class BooksController < ApplicationController
       
     redirect_to book_path(@book)
   end
+
+  def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    book_params = params.require(:book).permit(:year, :month, :inout, :category, :amount)
+
+    return redirect_to action: :edit unless @book.update(book_params)
+      
+    redirect_to book_path(@book)
+  end
   
 end
