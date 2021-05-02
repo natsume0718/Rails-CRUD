@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
+
+  before_action :set_book, only: [:show, :edit, :update, :destroy]
+
   def index
     @books = Book.all
   end
 
   def show
-    @book = Book.find(params[:id])
   end
 
   def new
@@ -24,11 +26,9 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:id])
   end
 
   def update
-    @book = Book.find(params[:id])
     book_params = params.require(:book).permit(:year, :month, :inout, :category, :amount)
 
     unless @book.update(book_params)
@@ -41,11 +41,15 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book = Book.find(params[:id])
     @book.destroy
 
     flash[:success] = "削除に成功しました。"
     redirect_to books_path # action: :index も同じ
   end
   
+
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
 end
