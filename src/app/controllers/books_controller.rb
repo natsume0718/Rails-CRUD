@@ -10,8 +10,8 @@ class BooksController < ApplicationController
 
     @total = 0;
     @books.each do |book|
-      @total += book.amount if book.inout == 1
-      @total -= book.amount if book.inout == 2
+      @total += book.amount if book.in?
+      @total -= book.amount if book.out?
     end
   end
 
